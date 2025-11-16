@@ -1,40 +1,26 @@
-//your JS code here. If required.
 const inputs = document.querySelectorAll(".code");
 
-// Focus first input by default
+// Focus the first input when page loads
 inputs[0].focus();
 
+// Loop through all inputs
 inputs.forEach((input, index) => {
 
-  input.addEventListener("input", (e) => {
-    const value = e.target.value;
-
-    // Accept only digits
-    if (!/^[0-9]$/.test(value)) {
-      e.target.value = "";
-      return;
-    }
-
-    // Move to next input
-    if (index < inputs.length - 1 && value) {
+  // Move to next input automatically
+  input.addEventListener("input", () => {
+    if (input.value.length === 1 && index < inputs.length - 1) {
       inputs[index + 1].focus();
     }
   });
 
+  // Move to previous input on Backspace
   input.addEventListener("keydown", (e) => {
     if (e.key === "Backspace") {
+      input.value = "";
 
-      if (input.value === "") {
-        // Move to previous input if current is empty
-        if (index > 0) {
-          inputs[index - 1].value = "";
-          inputs[index - 1].focus();
-        }
-      } else {
-        // Clear current input
-        input.value = "";
+      if (index > 0) {
+        inputs[index - 1].focus();
       }
     }
   });
-
 });
